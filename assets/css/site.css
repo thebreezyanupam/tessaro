@@ -87,14 +87,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .bar:focus-within { transform: none; }
 
 /* Logged-in visitors (and the Playground demo) get the WordPress admin bar,
-   which is also fixed at the top; sit below it and tuck past it. On small
-   screens core un-fixes the admin bar, so the header returns to the top. */
+   which is also fixed at the top; sit below it and tuck past it. Core lets
+   the admin bar scroll away on small screens, which would leave the header
+   either covered or floating with a gap, so it is kept fixed there too. */
 .admin-bar .bar { top: var(--wp-admin--admin-bar--height, 32px); }
 .admin-bar .bar.is-tucked { transform: translateY(calc(-100% - var(--wp-admin--admin-bar--height, 32px))); }
 .admin-bar .bar:focus-within { transform: none; }
 @media (max-width: 600px) {
-	.admin-bar .bar { top: 0; }
-	.admin-bar .bar.is-tucked { transform: translateY(-100%); }
+	html #wpadminbar { position: fixed; }
 }
 .bar__mark {
 	font-family: var(--display); font-weight: 800; font-stretch: 125%;
