@@ -85,6 +85,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .bar.is-tucked { transform: translateY(-100%); }
 .bar:focus-within { transform: none; }
+
+/* Logged-in visitors (and the Playground demo) get the WordPress admin bar,
+   which is also fixed at the top; sit below it and tuck past it. On small
+   screens core un-fixes the admin bar, so the header returns to the top. */
+.admin-bar .bar { top: var(--wp-admin--admin-bar--height, 32px); }
+.admin-bar .bar.is-tucked { transform: translateY(calc(-100% - var(--wp-admin--admin-bar--height, 32px))); }
+.admin-bar .bar:focus-within { transform: none; }
+@media (max-width: 600px) {
+	.admin-bar .bar { top: 0; }
+	.admin-bar .bar.is-tucked { transform: translateY(-100%); }
+}
 .bar__mark {
 	font-family: var(--display); font-weight: 800; font-stretch: 125%;
 	font-size: 1rem; letter-spacing: -.01em; text-decoration: none; white-space: nowrap;
