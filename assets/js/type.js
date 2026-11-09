@@ -29,7 +29,17 @@
 		if (calm) { return; }
 
 		$$('[data-words]').forEach((el) => {
-			const { words } = new SplitText(el, { type: 'words' });
+			const text = el.textContent.trim();
+			// Screen readers read one visually hidden copy of the sentence; the
+			// animated words are aria-hidden. SplitText's own options don't fit:
+			// 'auto' puts aria-label on the <p> (not allowed on a paragraph) and
+			// 'hidden' hides the whole <p>, copy included.
+			const { words } = new SplitText(el, { type: 'words', aria: 'none' });
+			words.forEach((word) => word.setAttribute('aria-hidden', 'true'));
+			const copy = document.createElement('span');
+			copy.className = 'sr-only';
+			copy.textContent = text;
+			el.append(copy);
 			gsap.fromTo(words, { opacity: 0.12 }, {
 				opacity: 1,
 				stagger: 0.05,
